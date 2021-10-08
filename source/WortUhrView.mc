@@ -36,13 +36,10 @@ class WortUhrView extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc as Dc) as Void {
-        // Get the current time and reduce it to 12 hour scale
+        // Get the current time
         var clockTime = System.getClockTime();
         var h = clockTime.hour;
         var m = clockTime.min;
-        if (h > 12) {
-            h = h - 12;
-        }
 
 		// create the German time string
         var t = "\nES IST" + timeString(h,m);
@@ -69,8 +66,11 @@ class WortUhrView extends WatchUi.WatchFace {
     	if (m > 47 && m <= 52) { s += "\nZEHN\nVOR"; }
     	if ((m > 22 && m <= 27 ) || (m > 52 && m <= 57)) { s += "\nFÜNF\nVOR"; }
     	if (m > 22 && m <= 37) { s += "\nHALB"; }
-    	if (m > 22 ) { h += 1;}
-    	
+    	if (m > 22 ) { h += 1;} //
+    	// reduce to 12 hour scale
+        if (h > 12) {
+            h = h - 12;
+        }    	
     	s += "\n" + numberString[h];
     	if ( h == 1 && m != 0 ) { s += "S"; }
     	if ( m == 0 ) { s += "\nUHR"; }
